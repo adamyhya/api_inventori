@@ -65,17 +65,6 @@ CREATE TABLE IF NOT EXISTS `tb_barang_keluar` (
 INSERT INTO `tb_barang_keluar` (`id_brg_keluar`, `id_barang`, `jumlah_barang_keluar`, `tgl_keluar`, `keterangan`, `id_jurusan`, `id_pengguna`) VALUES
 (1, 1, 30, '2020-07-29 13:55:36', 'Gedung A ,B ,C', 2, 1);
 
---
--- Trigger `tb_barang_keluar`
---
-DELIMITER $$
-CREATE TRIGGER `upstokkeluar` AFTER INSERT ON `tb_barang_keluar`
- FOR EACH ROW BEGIN
- UPDATE tb_barang SET jumlah_barang = jumlah_barang - NEW.jumlah_barang_keluar
- WHERE id_barang = NEW.id_barang;
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -100,17 +89,6 @@ CREATE TABLE IF NOT EXISTS `tb_barang_masuk` (
 INSERT INTO `tb_barang_masuk` (`id_brg_masuk`, `id_barang`, `jumlah_barang_masuk`, `tgl_masuk`, `keterangan`, `id_jurusan`, `id_pengguna`) VALUES
 (1, 1, 50, '2020-07-29 13:54:50', 'Test Barang Masuk', 2, 1);
 
---
--- Trigger `tb_barang_masuk`
---
-DELIMITER $$
-CREATE TRIGGER `upstokmasuk` AFTER INSERT ON `tb_barang_masuk`
- FOR EACH ROW BEGIN
- UPDATE tb_barang SET jumlah_barang = jumlah_barang + NEW.jumlah_barang_masuk
- WHERE id_barang = NEW.id_barang;
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
