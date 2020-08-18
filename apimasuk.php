@@ -51,7 +51,7 @@ $jur = $records->{"id_jurusan"};
 $pgn = $records->{"id_pengguna"};
 $nb = $records->{"nama_barang"};
 $jmlb = "";
-$admin = "adamyahya";
+$admin = $records->{"id_user"};
 $isi = "Barang Masuk ".$nb." Sebanyak ".$jmlk;
 $query = "INSERT INTO tb_barang_masuk (id_barang, jumlah_barang_masuk, keterangan, id_jurusan, id_pengguna,tgl_masuk) values ('$idb','$jmlk','$ket','$jur','$pgn',NOW())";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menambahkan','$isi',now(),'$admin','1')";
@@ -86,7 +86,7 @@ $idbm = $records->{"id_brg_masuk"};
 $jmlk = $records->{"jumlah_barang_masuk"};
 $nb = $records->{"nama_barang"};
 $isi = "Barang Masuk ".$nb." Sebanyak ".$jmlk;
-$admin = "adamyahya";
+$admin = $_GET['iduser'];
 $query = "DELETE FROM tb_barang_masuk where id_brg_masuk = '$idbm'";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menghapus','$isi',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){

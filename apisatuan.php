@@ -31,9 +31,10 @@ elseif($action == '2')
 {
 $records = json_decode($_REQUEST['records']);
 $nmj = $records->{"nama_satuan"};
+$admin = $records->{"id_user"};
 $query = "INSERT INTO tb_satuan (nama_satuan) values ('$nmj')";
 $isi = "Satuan ".$nmj;
-$admin = "adamyahya";
+
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menambahkan','$isi',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
 $success = 'true';
@@ -58,7 +59,7 @@ $idj = $records->{"id_satuan"};
 $nmj = $records->{"nama_satuan"};
 $query = "DELETE FROM tb_satuan where id_satuan = '$idj'";
 $isi = "Satuan ".$nmj;
-$admin = "adamyahya";
+$admin = $_GET['iduser'];
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menghapus','$isi',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
 $success = 'true';
@@ -85,7 +86,7 @@ $ns = $records->{"nama_satuan"};
 $oldns = $records->{"old_nama_satuan"};
 $query = "UPDATE tb_satuan set nama_satuan = '$ns' where id_satuan = '$ids'";
 $isi = "Satuan ".$oldns." Menjadi ".$ns;
-$admin = "adamyahya";
+$admin = $records->{"id_user"};
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Mengubah','$isi',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
 $success = 'true';

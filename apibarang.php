@@ -33,7 +33,7 @@ $idk = $records->{"id_kategori"};
 $ids = $records->{"id_satuan"};
 $nb = $records->{"nama_barang"};
 $jml = $records->{"jumlah_barang"};
-$admin = "adamyahya";
+$admin = $records->{"id_user"};
 $isi = $nb." Sebanyak ".$jml;
 $query = "INSERT INTO tb_barang (id_kategori, id_satuan, nama_barang, jumlah_barang) values ('$idk','$ids','$nb','$jml')";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menambahkan','$isi',now(),'$admin','1')";
@@ -59,7 +59,7 @@ elseif($action == "3"){
 $records = json_decode($_REQUEST['records']);
 $idbs = $records->{"id_barang"};
 $nb = $records->{"nama_barang"};
-$admin = "adamyahya";
+$admin = $_GET['iduser'];
 $query = "DELETE FROM tb_barang where id_barang = '$idbs'";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menghapus','$nb',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
@@ -90,7 +90,7 @@ $ids = $records->{"id_satuan"};
 $oldnb = $records->{"old_nama_barang"};
 $oldjml = $records->{"old_jumlah_barang"};
 $isi = $oldnb." Sebanyak ".$oldjml." Menjadi ".$nb." Sebanyak ".$jml;
-$admin = "adamyahya";
+$admin = $records->{"id_user"};
 $query = "UPDATE tb_barang set nama_barang = '$nb', jumlah_barang = '$jml', id_kategori = '$idk', id_satuan = '$ids' where id_barang = '$idb'";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Mengubah','$isi',now(),'$admin','1')";
 

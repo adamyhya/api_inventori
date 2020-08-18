@@ -32,6 +32,7 @@ $records = json_decode($_REQUEST['records']);
 $idj = $records->{"id_kategori"};
 $nmj = $records->{"nama_kategori"};
 $isi = "Kategori ".$nmj;
+$admin = $records->{"id_user"};
 $query = "INSERT INTO tb_kategori (id_kategori, nama_kategori) values ('$idj','$nmj')";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menambahkan','$isi',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
@@ -55,7 +56,7 @@ elseif ($action == '3') {
 $records = json_decode($_REQUEST['records']);
 $idj = $records->{"id_kategori"};
 $nmk = "Kategori ".$records->{"nama_kategori"};
-$admin = "adamyahya";
+$admin = $_GET['iduser'];
 $query = "DELETE FROM tb_kategori where id_kategori = '$idj'";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menghapus','$nmk',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
@@ -81,7 +82,7 @@ $records = json_decode($_REQUEST['records']);
 $idk = $records->{"id_kategori"};
 $nk = $records->{"nama_kategori"};
 $oldnk = $records->{"old_nama_kategori"};
-$admin = "adamyahya";
+$admin = $records->{"id_user"};
 $isi = "Kategori ".$oldnk." Menjadi ".$nk;
 $query = "UPDATE tb_kategori set nama_kategori = '$nk' where id_kategori = '$idk'";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Mengubah','$isi',now(),'$admin','1')";

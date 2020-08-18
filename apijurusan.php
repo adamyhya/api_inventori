@@ -33,7 +33,7 @@ $records = json_decode($_REQUEST['records']);
 $nmj = $records->{"nama_jurusan"};
 $query = "INSERT INTO tb_jurusan (nama_jurusan) values ('$nmj')";
 $isi = "Jurusan ".$nmj;
-$admin = "adamyahya";
+$admin = $records->{"id_user"};
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menambahkan','$isi',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
 $success = 'true';
@@ -58,7 +58,7 @@ $idj = $records->{"id_jurusan"};
 $nmj = $records->{"nama_jurusan"};
 $query = "DELETE FROM tb_jurusan where id_jurusan = '$idj'";
 $isi = "Jurusan ".$nmj;
-$admin = "adamyahya";
+$admin = $_GET['iduser'];
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menghapus','$isi',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
 $success = 'true';
@@ -85,7 +85,7 @@ $nk = $records->{"nama_jurusan"};
 $oldnk = $records->{"old_nama_jurusan"};
 $query = "UPDATE tb_jurusan set nama_jurusan = '$nk' where id_jurusan = '$idk'";
 $isi = "Jurusan ".$oldnk." Menjadi ".$nk;
-$admin = "adamyahya";
+$admin = $records->{"id_user"};
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Mengubah','$isi',now(),'$admin','1')";
 if($conn->query($query) == TRUE && $conn->query($query1) == TRUE){
 $success = 'true';

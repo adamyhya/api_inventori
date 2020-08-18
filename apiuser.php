@@ -5,7 +5,12 @@ $callback = $_REQUEST['callback'];
 $success = 'false';
 if($action == '1'){
 $rank = 'SET @rank=0';
-$query = 'SELECT @rank:=@rank+1 as nomor, id_user, uname, pwd, nama_user, IF(akses = 1, "Admin", "Staff") as akses, kontak, DATE_FORMAT(tgl_buat,"%D %M% %Y") as tgl_buat from tb_user' or die("Cannot Access item");
+$query = 'SELECT @rank:=@rank+1 as nomor, id_user, uname, pwd, nama_user, 
+( CASE
+when akses = 1 then "Admin" 
+when akses = 2 then "Staff" 
+ELSE "Reporter" 
+END ) as akses, kontak, DATE_FORMAT(tgl_buat,"%D %M% %Y") as tgl_buat from tb_user' or die("Cannot Access item");
 $result = mysqli_query($conn, $rank);
 $result = mysqli_query($conn, $query);
 if(mysqli_num_rows($result) > 0){
@@ -35,10 +40,13 @@ $kt = $records->{"kontak"};
 if($akses == "1"){
 	$akses = "Admin";
 }
-else{
+elseif($akses == "2"){
 	$akses = "Staff";
 }
-$admin = "admayahya";
+else{
+	$akses = "Reporter";
+}
+$admin = $records->{"id_user1"};
 $isi = $nmu." Sebagai ".$akses;
 $query = "INSERT INTO tb_user (nama_user, uname, pwd, akses, kontak, tgl_buat) values ('$nmu','$un',md5('$pw'),'$akses','$kt', NOW())";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Mendaftarkan','$isi',now(),'$admin','1')";
@@ -62,7 +70,7 @@ elseif ($action == '3') {
 $records = json_decode($_REQUEST['records']);
 $idj = $records->{"id_user"};
 $nmu = $records->{"nama_user"};
-$admin = "adamyahya";
+$admin = $_GET['iduser'];
 $isi = "Data Pengguna ".$nmu;
 $query = "DELETE FROM tb_user where id_user = '$idj'";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Menghapus','$isi',now(),'$admin','1')";
@@ -92,7 +100,7 @@ $un = $records->{"uname"};
 $pw = $records->{"pwd"};
 $akses = $records->{"akses"};
 $kontak = $records->{"kontak"};
-$admin = "adamyahya";
+$admin = $records->{"id_user1"};
 $isi = "Data Pengguna ".$nk;
 $query = "UPDATE tb_user set nama_user = '$nk', uname = '$un', pwd = md5('$pw'), akses = '$akses', kontak = '$kontak' where id_user = '$idk'";
 $query1 = "INSERT INTO notif (id_notif,jenis,isi,tgl,admin,status) values ('','Mengubah','$isi',now(),'$admin','1')";
